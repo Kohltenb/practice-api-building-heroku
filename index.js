@@ -6,6 +6,7 @@ const server = express()
 const PORT = process.env.PORT || 8080;
 
 server.use(express.json())
+server.use(express.static(path.join(__dirname, 'client/build')))
 
 server.get('/api/user', (req, res) => {
     res.json([
@@ -13,6 +14,10 @@ server.get('/api/user', (req, res) => {
         { id: 2, username: 'bar'},
         { id: 3, username: 'baz'}
     ])
+})
+
+server.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 })
 
 
